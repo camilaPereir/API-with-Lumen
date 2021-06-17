@@ -13,6 +13,21 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
+$router->group(['prefix' => "/users"], function () use ($router) {
+    $router->get("/{id}", "UsersController@show");
+    $router->get("/", "UsersController@index");
+    $router->post("/", "UsersController@store");
+    $router->put("/{id}", "UsersController@update");
+    $router->delete("/{id}", "UsersController@destoy");
 });
+
+$router->group(['prefix' => "/transactions"], function () use ($router) {
+    $router->get("/{id}", "TransactionController@show");
+    $router->get("/", "TransactionController@index");
+    $router->post("/", "TransactionController@store");
+});
+
+
+// $router->get('/', function () use ($router) {
+//     return $router->app->version();
+// });
