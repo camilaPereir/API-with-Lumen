@@ -13,13 +13,16 @@ class TransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::create("transactions", function ($blueprint) {
+        Schema::create("transaction", function (Blueprint $blueprint) {
 
             $blueprint->id();
-            $blueprint->integer("id_user");
-            $blueprint->integer("id_user");
-            $blueprint->float("value");
+            $blueprint->unsignedBigInteger("payee");
+            $blueprint->unsignedBigInteger("payer");
+            $blueprint->decimal("value");
             $blueprint->timestamps();
+
+            $blueprint->foreign("payee")->references("id")->on("users")->onDelete("cascade");
+            $blueprint->foreign("payer")->references("id")->on("users")->onDelete("cascade");
         });
     }
 
@@ -30,6 +33,6 @@ class TransactionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists("transactions");
+        Schema::dropIfExists("transaction");
     }
 }

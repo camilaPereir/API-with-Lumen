@@ -13,10 +13,10 @@ class UserType extends Migration
      */
     public function up()
     {
-        Schema::create("user_type", function ($blueprint) {
+        Schema::create("type", function (Blueprint $blueprint) {
 
             $blueprint->id();
-            $blueprint->string("descriptions");
+            $blueprint->boolean("lojista");
             $blueprint->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class UserType extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists("user_type");
+        Schema::dropIfExists("type");
     }
 }

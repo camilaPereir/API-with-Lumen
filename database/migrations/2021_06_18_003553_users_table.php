@@ -13,16 +13,19 @@ class UsersTable extends Migration
      */
     public function up()
     {
-        Schema::create("users", function ($blueprint) {
+        Schema::create("users", function (Blueprint $blueprint) {
 
             $blueprint->id();
             $blueprint->string("name");
             $blueprint->string("email")->unique();
             $blueprint->string("cpf_cnpj")->unique();
             $blueprint->string("password");
-            $blueprint->string("user_type_id");
-            $blueprint->string("wallet_id");
+            $blueprint->unsignedBigInteger("type_id");
+            $blueprint->unsignedBigInteger("wallet_id");
             $blueprint->timestamps();
+
+            $blueprint->foreign("type_id")->references("id")->on("type")->onDelete("cascade");
+            $blueprint->foreign("wallet_id")->references("id")->on("wallet")->onDelete("cascade");
         });
     }
 

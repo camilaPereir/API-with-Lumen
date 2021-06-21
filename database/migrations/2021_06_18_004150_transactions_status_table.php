@@ -13,12 +13,14 @@ class TransactionsStatusTable extends Migration
      */
     public function up()
     {
-        Schema::create("status_transactions", function ($blueprint) {
+        Schema::create("status", function (Blueprint $blueprint) {
 
             $blueprint->id();
             $blueprint->string("status");
-            $blueprint->integer("transaction_id");
+            $blueprint->unsignedBigInteger("transaction_id");
             $blueprint->timestamps();
+
+            $blueprint->foreign("transaction_id")->references("id")->on("transaction")->onDelete("cascade");
         });
     }
 
@@ -29,6 +31,6 @@ class TransactionsStatusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists("status_transactions");
+        Schema::dropIfExists("status");
     }
 }

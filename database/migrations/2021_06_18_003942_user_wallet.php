@@ -13,12 +13,14 @@ class UserWallet extends Migration
      */
     public function up()
     {
-        Schema::create("wallet", function ($blueprint) {
+        Schema::create("wallet", function (Blueprint $blueprint) {
 
             $blueprint->id();
-            $blueprint->id_user("id_user");
-            $blueprint->float("value");
+            $blueprint->unsignedBigInteger("id_users");
+            $blueprint->decimal("value")->default(100.00);
             $blueprint->timestamps();
+
+            $blueprint->foreign("id_users")->references("id")->on("users")->onDelete("cascade");
         });
     }
 
