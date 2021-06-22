@@ -6,10 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Wallet extends Model
 {
+    protected $table = "wallet";
+
     protected $fillable = [
         "id_users",
         "value"
     ];
+
 
     public function Users()
     {

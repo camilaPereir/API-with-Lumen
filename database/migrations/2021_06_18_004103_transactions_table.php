@@ -21,8 +21,8 @@ class TransactionsTable extends Migration
             $blueprint->decimal("value");
             $blueprint->timestamps();
 
-            $blueprint->foreign("payee")->references("id")->on("users")->onDelete("cascade");
-            $blueprint->foreign("payer")->references("id")->on("users")->onDelete("cascade");
+            $blueprint->foreign("payee")->references("id")->on("wallet");
+            $blueprint->foreign("payer")->references("id")->on("wallet");
         });
     }
 

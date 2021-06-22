@@ -21,11 +21,9 @@ class UsersTable extends Migration
             $blueprint->string("cpf_cnpj")->unique();
             $blueprint->string("password");
             $blueprint->unsignedBigInteger("type_id");
-            $blueprint->unsignedBigInteger("wallet_id");
             $blueprint->timestamps();
 
             $blueprint->foreign("type_id")->references("id")->on("type");
-            $blueprint->foreign("wallet_id")->references("id")->on("wallet")->onDelete("cascade");
         });
     }
 

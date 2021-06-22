@@ -13,6 +13,13 @@
 |
 */
 
+$router->group(['prefix' => "/types"], function () use ($router) {
+    $router->get("/", "TypeController@index");
+    $router->post("/", "TypeController@store");
+    $router->put("/{id}", "TypeController@update");
+    $router->delete("/{id}", "TypeController@destoy");
+});
+
 //Na rota de usuários, quando for listar, vai listar o valor salvo carteira e o tipo junto
 $router->group(['prefix' => "/users"], function () use ($router) {
     $router->get("/{id}", "UsersController@show");

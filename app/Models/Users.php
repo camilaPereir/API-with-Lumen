@@ -12,28 +12,15 @@ class Users extends Model
         "email",
         "password",
         "cpf_cnpj",
-        "type_id",
-        "wallet_id"
+        "type_id"
     ];
 
     protected $hidden = [
         'password',
     ];
 
-    // public array $rules = [
-    //     "name" => "required|max:45|alpha",
-    //     "email" => "required|email|max:100|email:rfc,dns",
-    //     "password" => "required|max:45|alpha",
-    //     "cpf_cnpj" => "required|max:45|alpha"
-    // ];
-
-    public function wallet()
+    public function type()
     {
-        return $this->hasMany(Wallet::class);
-    }
-
-    public function typeUser()
-    {
-        return $this->hasMany(TypeUser::class);
+        return $this->hasOne(Type::class);
     }
 }

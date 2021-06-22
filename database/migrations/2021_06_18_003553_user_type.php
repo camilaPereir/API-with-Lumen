@@ -16,7 +16,7 @@ class UserType extends Migration
         Schema::create("type", function (Blueprint $blueprint) {
 
             $blueprint->id();
-            $blueprint->boolean("lojista");
+            $blueprint->string("description")->nullable();
             $blueprint->timestamps();
         });
     }

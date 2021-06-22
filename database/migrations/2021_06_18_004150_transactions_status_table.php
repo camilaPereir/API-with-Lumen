@@ -20,7 +20,7 @@ class TransactionsStatusTable extends Migration
             $blueprint->unsignedBigInteger("transaction_id");
             $blueprint->timestamps();
 
-            $blueprint->foreign("transaction_id")->references("id")->on("transaction")->onDelete("cascade");
+            $blueprint->foreign("transaction_id")->references("id")->on("transaction");
         });
     }
 
