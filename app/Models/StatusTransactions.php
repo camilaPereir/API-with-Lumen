@@ -13,6 +13,6 @@ class StatusTransaction extends Model
 
     public function Users()
     {
-        return $this->belongsTo(Transactions::class);
+        return $this->belongsTo(Transaction::class);
     }
 }

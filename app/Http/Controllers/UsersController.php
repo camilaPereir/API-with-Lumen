@@ -26,8 +26,15 @@ class UsersController extends Controller
 
     public function show($id)
     {
+        //retornar o usuario com o valor que tem em carteira
         $user = $this->model->find($id);
-        return response()->json($user, status: Response::HTTP_OK);
+        $wallet = $this->model->find($id);
+        //if ($wallet->id && $user->id) {
+            $return = ["id" => $user->id, "name" => $user->name, "cpf_cnpj" => $user->cpf_cnpj, "email" => $user->email, "type_id" => $user->type_id, "value" => $wallet->value];
+            return response()->json($return, status: Response::HTTP_OK);
+       // } else {
+            return response()->json($user, status: Response::HTTP_OK);
+        //}
     }
 
     public function index()
@@ -38,28 +45,6 @@ class UsersController extends Controller
 
     public function store(Request $request)
     {
-        // $rules = array(
-        //     'name' => 'required|string|max:255',
-        //     'cpf_cnpj' => 'required|unique:users',
-        //     'email' => 'required|email|unique:users|email:rfc,dns',
-        //     'password' => 'required|min:8',
-        //     'type_id' => 'required|exists:type,id'
-        // );
-
-        // $messages = array(
-        //     'name.required' => 'field name is required',
-        //     'cpf_cnpj.required' => 'field value is required',
-        //     'email.required' => 'field SKU is required',
-        //     'password.required' => 'field description is required',
-        //     'type_id.required' => 'field description is required'
-        // );
-
-        // $validator = Validator::make($request->all(), $rules, $messages);
-
-        // if ($validator->fails()) {
-        //     return $validator->messages();
-        // }
-
         $validatedData = $this->validate($request, [
             'name' => 'required|string|max:255',
             'cpf_cnpj' => 'required|unique:users',
@@ -85,16 +70,25 @@ class UsersController extends Controller
 
     public function update(int $id, Request  $request)
     {
+        $validatedData = $this->validate($request, [
+            'name' => 'sometimes|string|max:255',
+            'cpf_cnpj' => 'sometimes|unique:users',
+            'email' => 'sometimes|email|unique:users|email:rfc,dns',
+            'password' => 'sometimes|min:8',
+            'type_id' => 'sometimes|exists:type,id'
+        ]);
+
         $users = $this->model->find($id)
-            ->update($request->all());
-        return response()->json($users, status: Response::HTTP_ACCEPTED);
+            ->update($validatedData);
+
+        return response()->json($users, status: Response::HTTP_OK);
     }
 
     public function destoy(int $id, Request $request)
     {
         $users = $this->model->find($id)
             ->update($request->all());
-        return response()->json($users, status: Response::HTTP_ACCEPTED);
+        return response()->json($users, status: Response::HTTP_OK);
     }
 
     //
