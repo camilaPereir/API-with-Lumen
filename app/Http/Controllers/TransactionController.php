@@ -8,10 +8,11 @@ use App\Models\Wallet;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
+use App\Services\TransactionService;
 
 class TransactionController extends Controller
 {
-    private $model;
+    private $transactionService;
     private $wallet;
 
     /**
@@ -19,25 +20,25 @@ class TransactionController extends Controller
      *
      * @return void
      */
-    public function __construct(Transaction $transaction, Wallet $wallet)
+    public function __construct(TransactionService $transactionService, Wallet $wallet)
     {
-        $this->model = $transaction;
+        $this->transactionService = $transactionService;
         $this->wallet = $wallet;
     }
 
     public function show($id)
     {
-        $transaction = $this->model->find($id);
+        $transaction = $this->transactionService->find($id);
         return response()->json($transaction, status: Response::HTTP_OK);
     }
 
     public function index()
     {
-        $transaction = $this->model->all();
+        $transaction = $this->transactionService->all();
         return response()->json($transaction, status: Response::HTTP_OK);
     }
 
-    public function store(Request $request, Users $users)
+    public function store(Request $request, Users $users, Wallet $wallet)
     {
         $validatedData = $this->validate($request, [
             'value' => 'required|numeric',
@@ -45,33 +46,8 @@ class TransactionController extends Controller
             'payer' => 'required|int|different:payee|exists:wallet,id'
         ]);
 
-
-        $transaction = $this->model->create($validatedData); 
-        $payerWallet = $this->wallet->findOrFail($transaction->payer);
-        $payeeWallet = $this->wallet->findOrFail($transaction->payee);
-
-        if ($payerWallet->users->id !== $users->id) {
-            echo "error";
-        }
-
-        if($transaction->value > $payeeWallet->value) {
-            echo "saldo insuficiente";
-        }
-
-         DB::beginTransaction(function () use ($transaction, $payerWallet, $payeeWallet) {
-            $payerWalletValue = $payerWallet->value - $transaction->value;
-            $this->wallet->update($payerWallet, ['value' => $payerWalletValue]);
-
-            $payeeWalletValue = $payeeWallet->value + $transaction->value;
-            $this->wallet->update($payeeWallet, ['value' => $payeeWalletValue]);
-
-            //$this->repository->save($transactions);
-            DB::commit();
-         });
-        $transaction = $transaction = $this->model->save($validatedData, $users);
-        return response($transaction, Response::HTTP_CREATED);
+        return response($this->transactionService->store($request->all()), Response::HTTP_CREATED);
     }
-
 
     //
 }
