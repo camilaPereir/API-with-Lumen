@@ -8,16 +8,22 @@ class WalletRepository
 {
     private $wallet;
 
-    public function __construct(Wallet $wallet){
+    public function __construct(Wallet $wallet)
+    {
         $this->wallet = $wallet;
     }
 
-    public function show(int $id): Object
+    public function get(int $id): Object
     {
-        return $this->wallet->findOrFail($id);
+        return $this->wallet->find($id);
     }
 
-    public function update(int $id, float $value): int
+    public function create(array $params): Object
+    {
+        return $this->wallet->create($params);
+    }
+
+    public function save(int $id, float $value): int
     {
         return $this->wallet->where('id', $id)->update(['value' => $value]);
     }
