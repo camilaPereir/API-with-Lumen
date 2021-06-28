@@ -28,11 +28,12 @@ O objetivo é realizar transações simplificadas atendendo os requisitos abaixo
 
 ### Instalação e Configuração
 
-- Clone com o comando git clone [https://github.com/camilaPereir/API-with-Lumen.git](https://github.com/camilaPereir/API-with-Lumen.git)  ou faça o download deste repositório
+- Clone com o comando `git clone https://github.com/camilaPereir/API-with-Lumen.git`  ou faça o download deste repositório
 - Execute `cp .env.example .env` no Mac/Unix ou `COPY .env.example .env` no Windows
 - Configure sua conexão com o SGBD de sua preferência no arquivo .env
 - Execute `composer install` para instalar todas as dependências
 - Execute `php artisan migration` para criar as tabelas
+- Execute `php -S localhost:8000 -t public` para rodar o projeto
 - Se tudo funcionou corretamente, você pode navegar para `http://localhost:8000/types` 🚀
 
 ### Modelagem do problema:
