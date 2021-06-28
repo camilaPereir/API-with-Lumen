@@ -39,16 +39,13 @@ class TypeController extends Controller
     {
         $type = $this->model->find($id)
             ->update($request->all());
-        return response()->json($type, status: Response::HTTP_ACCEPTED);
+        return response()->json($type, status: Response::HTTP_OK);
     }
 
     public function destoy($id, Request $request)
     {
         $type = $this->model->find($id)
             ->update($request->all());
-        return response()->json($type, status: Response::HTTP_ACCEPTED);
+        return response()->json($type, status: Response::HTTP_NO_CONTENT);
     }
-
-
-    //
 }
