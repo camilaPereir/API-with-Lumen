@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends Model
 {
+    protected $table = "transaction";
+
     protected $fillable = [
         "payee",
         "payer",
@@ -20,5 +22,10 @@ class Transaction extends Model
     public function payer()
     {
         return $this->hasOne(Users::class, "id", "payer");
+    }
+
+    public function transactionStatus()
+    {
+        return $this->hasMany(StatusTransaction::class, 'transaction_id', 'id');
     }
 }
