@@ -18,12 +18,12 @@ class UserRepository
         $user = $this->user->with('walletValue')->findOrFail($id);
 
         $return = [
-            "id" => $user->id,
-            "name" => $user->name,
-            "cpf_cnpj" => $user->cpf_cnpj,
-            "email" => $user->email,
-            "type_id" => $user->type_id,
-            "value" => $user->walletValue()
+            'id' => $user->id,
+            'name' => $user->name,
+            'cpf_cnpj' => $user->cpf_cnpj,
+            'email' => $user->email,
+            'type_id' => $user->type_id,
+            'value' => $user->walletValue()
         ];
         return $user;
     }

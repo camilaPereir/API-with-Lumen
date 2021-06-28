@@ -23,11 +23,11 @@ class TransactionRepository
         $transaction = $this->transaction->with('transactionStatus')->findOrFail($id);
 
         $return = [
-            "id" => $transaction->id,
-            "payee" => $transaction->payee,
-            "payer" => $transaction->payer,
-            "value" => $transaction->value,
-            "status" => $transaction->transactionStatus()->orderBy('id', 'desc')->first()
+            'id' => $transaction->id,
+            'payee' => $transaction->payee,
+            'payer' => $transaction->payer,
+            'value' => $transaction->value,
+            'status' => $transaction->transactionStatus()->orderBy('id', 'desc')->first()
         ];
 
         return $return;

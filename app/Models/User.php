@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    protected $table = "users";
+    protected $table = 'users';
 
     protected $fillable = [
-        "name",
-        "email",
-        "password",
-        "cpf_cnpj",
-        "type_id"
+        'name',
+        'email',
+        'password',
+        'cpf_cnpj',
+        'type_id'
     ];
 
     protected $hidden = [

@@ -30,43 +30,21 @@ class TransactionService
 
     public function getAll()
     {
-        $transaction = $this->transactionRepository->getAll();
-        $response = [
-            'message' => TransactionEnum::SUCESS_FIND,
-            'error' => 0,
-            'transaction' => $transaction
-        ];
-        if (empty($transaction)) {
-            $response['error'] = 1;
-            $response['message'] = TransactionEnum::ERR_NOT_DATA;
-            return $response;
-        }
-        return $response;
+        return $this->transactionRepository->getAll();
     }
 
     public function get(int $id)
     {
-        $transaction = $this->transactionRepository->get($id);
-        $response = [
-            'message' => TransactionEnum::SUCESS_FIND,
-            'error' => 0,
-            'transaction' => $transaction
-        ];
-        if (empty($transaction)) {
-            $response['error'] = 1;
-            $response['message'] = TransactionEnum::ERR_NOT_FOUND;
-            return $response;
-        }
-        return $response;
+        return $this->transactionRepository->get($id);
     }
 
     public function create(array $params)
     {
         DB::begintransaction();
 
-        $payerWallet = $this->walletRepository->get($params["payer"]);
-        $payeeWallet = $this->walletRepository->get($params["payee"]);
-        $payerUser = $this->userRepository->get($payerWallet["id_users"]);
+        $payerWallet = $this->walletRepository->get($params['payer']);
+        $payeeWallet = $this->walletRepository->get($params['payee']);
+        $payerUser = $this->userRepository->get($payerWallet['id_users']);
 
         $response = [
             'message' => TransactionEnum::SUCESS_FIND,
@@ -74,25 +52,13 @@ class TransactionService
             'transaction' => null
         ];
 
-        if (!empty($payerWallet->wallet)) {
-            $response['error'] = 1;
-            $response['message'] = TransactionEnum::ERR_NOT_EXIST_PAYER;
-            return $response;
-        }
-
-        if (!empty($payeeWallet->wallet)) {
-            $response['error'] = 1;
-            $response['message'] = TransactionEnum::ERR_NOT_EXIST_PAYEE;
-            return $response;
-        }
-
         if (!$this->isPermitted($payerUser->type_id)) {
             $response['error'] = 1;
             $response['message'] = TransactionEnum::ERR_NOT_TYPE_PERMITED;
             return $response;
         }
 
-        if ($params["value"] > $payerWallet->value) {
+        if ($params['value'] > $payerWallet->value) {
             $response['error'] = 1;
             $response['message'] = TransactionEnum::ERR_INSUFFICIENT_AMOUNT;
             return $response;
@@ -109,9 +75,7 @@ class TransactionService
         $statusParams = ['transaction_id' => $transactionEfect['id'], 'status' => 'Pendente'];
         $this->statusRepository->create($statusParams);
 
-        $autorizada = $this->isAuthorizable();
-
-        if (!$autorizada) {
+        if (!$this->isAuthorizable()) {
             $statusParams = ['transaction_id' => $transactionEfect['id'], 'status' => 'Not Authorized'];
             $this->statusRepository->create($statusParams);
             $response['error'] = 1;
@@ -119,7 +83,7 @@ class TransactionService
             return $response;
         }
 
-        $payerWalletValue = $payerWallet->value - $params["value"];
+        $payerWalletValue = $payerWallet->value - $params['value'];
 
         $payerUpdated = $this->walletRepository->save($payerWallet->id, $payerWalletValue);
         if (!$payerUpdated) {
@@ -129,7 +93,7 @@ class TransactionService
             return $response;
         }
 
-        $payeeWalletValue = $payeeWallet->value + $params["value"];
+        $payeeWalletValue = $payeeWallet->value + $params['value'];
 
         $payeeUpdated = $this->walletRepository->save($payeeWallet->id, $payeeWalletValue);
         if (!$payeeUpdated) {
@@ -160,7 +124,7 @@ class TransactionService
     public function isPermitted(int $id)
     {
         $validateType = $this->typeRepository->get($id);
-        if ($validateType["id"] === 1) {
+        if ($validateType['id'] === 1) {
             return false;
         }
         return true;
@@ -168,8 +132,8 @@ class TransactionService
 
     public function isAuthorizable()
     {
-        $response = Http::post("https://run.mocky.io/v3/8fafdd68-a090-496f-8c9a-3442cf30dae6");
-        if (isset($response["message"]) && !empty($response["message"]) && $response["message"] === "Autorizado") {
+        $response = Http::post('https://run.mocky.io/v3/8fafdd68-a090-496f-8c9a-3442cf30dae6');
+        if (isset($response['message']) && !empty($response['message']) && $response['message'] === 'Autorizado') {
             return true;
         } else {
             return false;
@@ -178,8 +142,8 @@ class TransactionService
 
     public function sendNotification()
     {
-        $response = Http::post("http://o4d9z.mocklab.io/notify");
-        if (isset($response["message"]) && !empty($response["message"]) &&  $response["message"] === "Success") {
+        $response = Http::post('http://o4d9z.mocklab.io/notify');
+        if (isset($response['message']) && !empty($response['message']) &&  $response['message'] === 'Success') {
             return true;
         } else {
             return false;

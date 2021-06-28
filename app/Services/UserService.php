@@ -61,15 +61,15 @@ class UserService
         ];
 
         if (!empty((array) $users)) {
-            $wallet = $this->walletRepository->create(["id_users" => $users->id, "value" => 100.00]);
+            $wallet = $this->walletRepository->create(['id_users' => $users->id, 'value' => 100.00]);
             if (!empty((array) $wallet)) {
                 $user = [
-                    "id" => $users->id,
-                    "name" => $users->name,
-                    "cpf_cnpj" => $users->cpf_cnpj,
-                    "email" => $users->email,
-                    "type_id" => $users->type_id,
-                    "value" => $wallet->value
+                    'id' => $users->id,
+                    'name' => $users->name,
+                    'cpf_cnpj' => $users->cpf_cnpj,
+                    'email' => $users->email,
+                    'type_id' => $users->type_id,
+                    'value' => $wallet->value
                 ];
                 DB::commit();
                 $response['error'] = 0;

@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class StatusTransaction extends Model
 {
-    protected $table = "status";
+    protected $table = 'status';
     protected $fillable = [
-        "status",
-        "transaction_id",
+        'status',
+        'transaction_id',
     ];
 
     public function User() //user

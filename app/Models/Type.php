@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Type extends Model
 {
     protected $fillable = [
-        "description",
+        'description',
     ];
 
-    protected $table = "type";
+    protected $table = 'type';
 }
