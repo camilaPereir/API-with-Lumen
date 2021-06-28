@@ -22,11 +22,11 @@ $router->group(['prefix' => "/types"], function () use ($router) {
 
 //Na rota de usuários, quando for listar, vai listar o valor salvo carteira e o tipo junto
 $router->group(['prefix' => "/users"], function () use ($router) {
-    $router->get("/{id}", "UsersController@show");
-    $router->get("/", "UsersController@index");
-    $router->post("/", "UsersController@store");
-    $router->put("/{id}", "UsersController@update");
-    $router->delete("/{id}", "UsersController@destoy");
+    $router->get("/{id}", "UserController@show");
+    $router->get("/", "UserController@index");
+    $router->post("/", "UserController@store");
+    $router->put("/{id}", "UserController@update");
+    $router->delete("/{id}", "UserController@destoy");
 });
 
 //Na rota de transação, quando for listar, irá aparecer o status da transacao junto
@@ -35,7 +35,3 @@ $router->group(['prefix' => "/transactions"], function () use ($router) {
     $router->get("/", "TransactionController@index");
     $router->post("/", "TransactionController@store");
 });
-
-// $router->get('/', function () use ($router) {
-//     return $router->app->version();
-// });
