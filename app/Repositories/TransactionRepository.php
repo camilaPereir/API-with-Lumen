@@ -6,18 +6,35 @@ use App\Models\Transaction;
 
 class TransactionRepository
 {
-    private $model;
+    private $transaction;
 
-    public function __construct(Transaction $transaction){
-        $this->model = $transaction;
-    }
-
-    public function show(int $id): Object
+    public function __construct(Transaction $transaction)
     {
-        return $this->type->findOrFail($id);
+        $this->transaction = $transaction;
     }
 
-    public function store(Array $params){
-        return $this->model->create($params);
+    public function getAll(): Object
+    {
+        return $this->transaction->all();
+    }
+
+    public function get(int $id)
+    {
+        $transaction = $this->transaction->with('transactionStatus')->findOrFail($id);
+
+        $return = [
+            "id" => $transaction->id,
+            "payee" => $transaction->payee,
+            "payer" => $transaction->payer,
+            "value" => $transaction->value,
+            "status" => $transaction->transactionStatus()->orderBy('id', 'desc')->first()
+        ];
+
+        return $return;
+    }
+
+    public function create(array $params)
+    {
+        return $this->transaction->create($params);
     }
 }
