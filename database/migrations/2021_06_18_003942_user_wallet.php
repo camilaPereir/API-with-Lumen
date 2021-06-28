@@ -20,7 +20,7 @@ class UserWallet extends Migration
             $blueprint->decimal("value")->default(100.00);
             $blueprint->timestamps();
 
-            $blueprint->foreign("id_users")->references("id")->on("users");
+            $blueprint->foreign("id_users")->references("id")->on("users")->onDelete('cascade');
         });
     }
 

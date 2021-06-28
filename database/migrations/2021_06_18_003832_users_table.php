@@ -23,7 +23,7 @@ class UsersTable extends Migration
             $blueprint->unsignedBigInteger("type_id");
             $blueprint->timestamps();
 
-            $blueprint->foreign("type_id")->references("id")->on("type");
+            $blueprint->foreign("type_id")->references("id")->on("type")->onDelete('cascade');
         });
     }
 
