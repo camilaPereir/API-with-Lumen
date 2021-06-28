@@ -25,18 +25,19 @@ O objetivo é realizar transações simplificadas atendendo os requisitos abaixo
 - [Composer](https://getcomposer.org/download/)
 
 - PHP >= 7.3
+- Mysql
 
 ### Instalação e Configuração
 
 - Clone com o comando `git clone https://github.com/camilaPereir/API-with-Lumen.git`  ou faça o download deste repositório
 - Execute `cp .env.example .env` no Mac/Unix ou `COPY .env.example .env` no Windows
-- Configure sua conexão com o SGBD de sua preferência no arquivo .env
+- Tenha um host hablitado no MySql e configure sua conexão no arquivo .env
 - Execute `composer install` para instalar todas as dependências
 - Execute `php artisan migration` para criar as tabelas
 - Execute `php -S localhost:8000 -t public` para rodar o projeto
 - Se tudo funcionou corretamente, você pode navegar para `http://localhost:8000/types` 🚀
 
-### Modelagem do problema:
+### Modelagem do banco de dados:
 ![image](https://user-images.githubusercontent.com/56832086/123687591-7bf65f00-d827-11eb-9cb7-33fdb30304f4.png)
 
 
