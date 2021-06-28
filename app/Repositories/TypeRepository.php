@@ -6,14 +6,15 @@ use App\Models\Type;
 
 class TypeRepository
 {
-    private $type;
+    private $typeRepository;
 
-    public function __construct(Type $type){
-        $this->type = $type;
+    public function __construct(Type $typeRepository)
+    {
+        $this->typeRepository = $typeRepository;
     }
 
-    public function show(int $id): Object
+    public function get(int $id): Object
     {
-        return $this->type->findOrFail($id);
+        return $this->typeRepository->find($id);
     }
 }
